@@ -1,12 +1,142 @@
-<!doctype html>
-<html>
+```
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <body>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .container{
+       max-width: 800px;
+       margin: 30px auto;
+       padding: 15px;
+       border-radius: 4px;
+       box-shadow: 0 0 4px 0 rgba(0,0,0,0.3);
+    }
+    .tab-header{
+      position: relative;
+       display: flex;
+       font-size: 15px;
+       color:black;
+       line-height: 30px;
+       font-weight: bold;
+       border-bottom: 2px solid #ccc; 
+    }
+
+    .tab-item{
+      margin-right: 30px;
+      cursor: pointer;
+    }
+    .tab-item.active{
+      color: lightskyblue;
+    }
+    .tab-panel{
+      
+      margin: 20px auto;
+      font-size: 14px;
+      display: none;
+    }
+    .tab-panel.active{
+      display: block;
+    }
+    .line{
+      position: absolute;
+      width:60px;
+     
+      top: 100%;
+      height: 2px;
+      background: blue;
+    }
+  </style>
+
+
+
+</head>
+<body>
+  <div class="container">
+    <h2>TAB 选项卡 </h2>
+    <div class="tabs">
+        <div class="tab-header">
+            <span class="tab-item ">用户管理</span>
+            <span class="tab-item">配置管理</span>
+            <span class="tab-item">角色管理</span>
+            <span class="tab-item">定时任务补偿</span>
+            <span class="line"></span>
+        </div>
+        <div class="tab-content">
+            <div class="tab-panel">personal message</div>
+            <div class="tab-panel">configuration file</div>
+            <div class="tab-panel">role management</div>
+            <div class="tab-panel">time offset</div>
+        </div>
+    </div>
+  </div>
+  <script> 
+      class Tabs {
+      constructor($container) {
+        this.$container = $container
+        this.$$tabItems = $container.querySelectorAll('.tab-item')
+        this.$$tabPanels = $container.querySelectorAll('.tab-panel')
+        this.$line = $container.querySelector('.line')
+        this.init()
+        this.bind()
+      }
+        init(){
+          this.$line.style.width = this.$$tabItems[0].offsetWidth + 'px'
+
+        }
+        bind(){
+          let self = this
+          this.$$tabItems.forEach($tab => {
+          $tab.onclick = function () {
+            self.$$tabItems.forEach($tab => $tab.classList.remove('active'))
+            this.classList.add('active')
+
+            self.$line.style.width = this.offsetWidth + 'px'
+            self.$line.style.transform = `translateX(${this.offsetLeft}px)`
+
+            let index = [...self.$$tabItems].indexOf(this)
+            self.$$tabPanels.forEach($panel => $panel.classList.remove('active'))
+            self.$$tabPanels[index].classList.add('active')
+    }
+  })
+        }
+    
+    
+    }
+    document.querySelectorAll('.tabs').forEach($container => new Tabs($container))
+ /* new Tabs(document.querySelectorAll('.tabs')[0])*/
+
+
+ /* const $ = s => document.querySelector(s)
+  const $$ = s => document.querySelectorAll(s)
+
+  const $$tabItems = $$('.tabs .tab-item')
+  const $$tabPanels = $$('.tabs .tab-panel')
+  const $line = $('.tabs .line')
+
+  $line.style.width = $$tabItems[0].offsetWidth + 'px'
+
+  $$tabItems.forEach($tab => {
+    $tab.onclick = function() {
+      $$tabItems.forEach($tab => $tab.classList.remove('active'))
+      this.classList.add('active')
+
+     
+      $line.style.width = this.offsetWidth + 'px'
+      $line.style.transform = `translateX(${this.offsetLeft}px)`
+
+      let index = [...$$tabItems].indexOf(this)
+      $$tabPanels.forEach($panel => $panel.classList.remove('active'))
+      $$tabPanels[index].classList.add('active')
+    }
+  })*/
   
-  
-  
-  
-  </body>
-  
-  
-  </head>
+  </script>
+
+
+
+</body>
+</html>
+```
